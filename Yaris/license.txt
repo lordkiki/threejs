@@ -1,0 +1,11 @@
+Model Information:
+* title:	Toyota GR Yaris Rocket Bunny Pandem
+* source:	https://sketchfab.com/3d-models/toyota-gr-yaris-rocket-bunny-pandem-5ef3d18b151448ab831a9f6c03d89b86
+* author:	blakebella (https://sketchfab.com/blakebella)
+
+Model License:
+* license type:	CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions can not be distributed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Toyota GR Yaris Rocket Bunny Pandem" (https://sketchfab.com/3d-models/toyota-gr-yaris-rocket-bunny-pandem-5ef3d18b151448ab831a9f6c03d89b86) by blakebella (https://sketchfab.com/blakebella) licensed under CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Toyota_land_cruiser
+* source:	https://sketchfab.com/3d-models/toyota-land-cruiser-5d9786f638b24c8ead09bb158dc8812d
+* author:	Jean-llace cars™ (https://sketchfab.com/JeanWallace10)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Toyota_land_cruiser" (https://sketchfab.com/3d-models/toyota-land-cruiser-5d9786f638b24c8ead09bb158dc8812d) by Jean-llace cars™ (https://sketchfab.com/JeanWallace10) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
