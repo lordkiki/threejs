@@ -1,3 +1,499 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9585dbbcd8aeb99556f8af6f378db03c880b3cfb3f1eebcd9f16ec82c16f8647
-size 27882
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	</head>
+	<body>
+		<input type="text" id="nama" style="background: none; border: none;text-align: center;position: absolute; right: 0; left: 0; margin-left: auto; margin-right: auto; top: 5%; font-size: xx-large;" disabled>
+		<div>
+			<button id="tes" class="1" style="position: absolute; right: 20%; bottom: 50%;margin: auto; background: none; border: none; font-size: xx-large; cursor: pointer;"><i class="bi bi-arrow-right"></i></button>
+			<button id="tes1" class="" style="position: absolute; left: 20%; bottom: 50%;margin: auto; background: none; border: none; font-size: xx-large; cursor: pointer;"><i class="bi bi-arrow-left"></i></button>
+			<button id="preview" class="active" style="position: absolute; right: 25%; bottom: 30%;margin: auto; background: none; border: none; font-size: xx-large; cursor: pointer;"><i class="bi bi-camera-video"></i></button>
+		</div>
+		<p style="text-align: center;position: absolute; right: 0; left: 0; margin-left: auto; margin-right: auto; bottom: 20%;"><b>Author:</b></p>
+		<input id="author" disabled style="background: none; border: none;text-align: center;position: absolute; right: 0; left: 0; margin-left: auto; margin-right: auto; bottom: 20%;">
+		<!-- <p style="text-align: center;position: absolute; right: 0; left: 0; margin-left: auto; margin-right: auto; bottom: 15%;"><b>Source:</b></p> -->
+		<a id="source" style="text-align: center;position: absolute; right: 0; left: 0; margin-left: auto; margin-right: auto; bottom: 18%; cursor: pointer;"><u>sources</u></a>
+
+		<script type="module">
+
+			import * as THREE from 'https://unpkg.com/three@0.127.0/build/three.module.js';
+			import { GLTFLoader } from 'https://unpkg.com/three@0.127.0/examples/jsm/loaders/GLTFLoader.js';
+			import { OrbitControls } from 'https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js';
+			
+			let innova, innovascene;
+			let fortuner, fortunerscene;
+			let hilux, hiluxscene;
+			let landcruiser, landcruiserscene;
+			let rav4, rav4scene;
+			let supra, suprascene;
+			let vellfire, vellfirescene;
+			let yaris, yarisscene;
+			let gt86, gt86scene;
+			let corolla, corollascene;
+
+			const scene = new THREE.Scene();
+			scene.background = new THREE.Color(0xdddddd)
+			const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 5000 );
+			
+			const ambientlight = new THREE.AmbientLight(0x404040, 20)
+			scene.add(ambientlight)
+
+			const directlight = new THREE.DirectionalLight(0xffffff,20)
+			directlight.position.set(0,1,0)
+			directlight.castShadow = true
+			scene.add(directlight)
+
+			const light = new THREE.PointLight(0xc4c4c4, 10)
+			light.position.set(0,300,500)
+			scene.add(light)
+			const light2 = new THREE.PointLight(0xc4c4c4, 10)
+			light.position.set(500,100,0)
+			scene.add(light2)
+			const light3 = new THREE.PointLight(0xc4c4c4, 10)
+			light.position.set(0,100,-500)
+			scene.add(light3)
+			const light4 = new THREE.PointLight(0xc4c4c4, 10)
+			light.position.set(-500,300,0)
+			scene.add(light4)
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			const controls = new OrbitControls(camera, renderer.domElement)
+			controls.enabled = false
+
+			const preview = document.getElementById('preview')
+			preview.addEventListener('click', function(){
+				if(preview.classList.value == 'active'){
+					controls.enabled = true
+					preview.classList.remove('active')
+					preview.innerHTML = '<i class="bi bi-camera-video-off">'
+				}else{
+					controls.enabled = false
+					preview.classList.add('active')
+					preview.innerHTML = '<i class="bi bi-camera-video">'
+				}
+			})
+
+			const floorgeo = new THREE.PlaneGeometry(200, 200)
+			floorgeo.rotateX(-Math.PI / 2)
+			const floortex = new THREE.TextureLoader().load('data:image/jpeg;base64,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')
+			const floormat = new THREE.MeshBasicMaterial({color:0xdddddd})
+			const floor = new THREE.Mesh(floorgeo, floormat)
+			scene.add(floor)
+
+			const geometry = new THREE.CylinderGeometry( 20, 20, 2, 20 );
+			const material = new THREE.MeshBasicMaterial( { map: floortex } );
+			const cylinder = new THREE.Mesh( geometry, material );
+			scene.add( cylinder );
+
+
+
+			//GONTA GANTI FUNCTION
+			let title, author, source;
+
+			const nama = document.getElementById("nama")
+			const pembuat = document.getElementById("author")
+			const sumber = document.getElementById("source")
+			const tes = document.getElementById("tes")
+			const tes1 = document.getElementById("tes1")
+			tes.addEventListener('click', function(){
+				if(tes.classList.value < 10){
+					tes.classList.value++
+				}
+			})
+			tes1.addEventListener('click', function(){
+				if(tes.classList.value > 1){
+					tes.classList.value--
+				}
+			})
+
+			//RENDER MOBIL
+			const loader = new GLTFLoader();
+			console.log(tes.classList.value)
+			if(tes.classList.value == 1){
+				tes1.style.display = "none"
+				loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Innova/scene.gltf', function(gltf){
+					innova = gltf.scene.children[0]
+					innova.scale.set(10, 10, 10)
+					innova.position.y = 1
+					innovascene = gltf.scene
+					scene.add(innovascene)
+					title = gltf.asset.extras.title
+					nama.value = title
+					author = gltf.asset.extras.author
+					pembuat.value = author
+					source = gltf.asset.extras.source
+					sumber.setAttribute('href', source)
+					console.log(gltf)
+					tes.addEventListener('click', function(){
+						if(tes.classList.value == 2){
+							tes1.style.display = "block"
+							scene.remove(innovascene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Fortuner/scene.gltf', function(gltf){
+								fortuner = gltf.scene.children[0]
+								fortuner.scale.set(1000, 1000, 1000)
+								fortuner.position.y = 1
+								fortunerscene = gltf.scene
+								scene.add(fortunerscene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 3){
+							scene.remove(fortunerscene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Hilux/scene.gltf', function(gltf){
+								hilux = gltf.scene.children[0]
+								hilux.scale.set(9, 9, 9)
+								hilux.position.y = 1
+								hilux.rotateZ(Math.PI)
+								hiluxscene = gltf.scene
+								scene.add(hiluxscene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 4){
+							scene.remove(hiluxscene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/LandCruiser/scene.gltf', function(gltf){
+								landcruiser = gltf.scene.children[0]
+								landcruiser.scale.set(9, 9, 9)
+								landcruiser.position.y = 1
+								landcruiserscene = gltf.scene
+								scene.add(landcruiserscene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 5){
+							scene.remove(landcruiserscene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Yaris/scene.gltf', function(gltf){
+								yaris = gltf.scene.children[0]
+								yaris.scale.set(9, 9, 9)
+								yaris.position.y = 6
+								yaris.rotateZ(Math.PI)
+								yarisscene = gltf.scene
+								scene.add(yarisscene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 6){
+							scene.remove(yarisscene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Corolla/scene.gltf', function(gltf){
+								corolla = gltf.scene.children[0]
+								corolla.scale.set(9, 9, 9)
+								corolla.position.y = 1
+								corollascene = gltf.scene
+								scene.add(corollascene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 7){
+							scene.remove(corollascene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Vellfire/scene.gltf', function(gltf){
+								vellfire = gltf.scene.children[0]
+								vellfire.scale.set(9, 9, 9)
+								vellfire.position.y = 1
+								vellfire.rotateZ(Math.PI)
+								vellfirescene = gltf.scene
+								scene.add(vellfirescene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 8){
+							scene.remove(vellfirescene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Supra/scene.gltf', function(gltf){
+								supra = gltf.scene.children[0]
+								supra.scale.set(9, 9, 9)
+								supra.position.y = 1
+								suprascene = gltf.scene
+								scene.add(suprascene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 9){
+							scene.remove(suprascene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Rav4/scene.gltf', function(gltf){
+								rav4 = gltf.scene.children[0]
+								rav4.scale.set(240, 240, 240)
+								rav4.position.y = 1
+								rav4.position.z = 23
+								rav4.position.x = -12
+								rav4scene = gltf.scene
+								scene.add(rav4scene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+						if(tes.classList.value == 10){
+							tes.style.display = "none"
+							scene.remove(rav4scene)
+							loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Gt86/scene.gltf', function(gltf){
+								gt86 = gltf.scene.children[0]
+								gt86.scale.set(1.8, 1.8, 1.8)
+								gt86.position.y = 1
+								gt86scene = gltf.scene
+								scene.add(gt86scene)
+								title = gltf.asset.extras.title
+								nama.value = title
+								author = gltf.asset.extras.author
+								pembuat.value = author
+								source = gltf.asset.extras.source
+								sumber.setAttribute('href', source)
+							})
+						}
+					})
+				})
+			}
+			tes1.addEventListener('click', function(){
+				if(tes.classList.value == 1){
+					tes1.style.display = "none"
+					scene.remove(fortunerscene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Innova/scene.gltf', function(gltf){
+						innova = gltf.scene.children[0]
+						innova.scale.set(10, 10, 10)
+						innova.position.y = 1
+						innovascene = gltf.scene
+						scene.add(innovascene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 2){
+					scene.remove(innovascene)
+					scene.remove(hiluxscene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Fortuner/scene.gltf', function(gltf){
+						fortuner = gltf.scene.children[0]
+						fortuner.scale.set(1000, 1000, 1000)
+						fortuner.position.y = 1
+						fortunerscene = gltf.scene
+						scene.add(fortunerscene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 3){
+					scene.remove(fortunerscene)
+					scene.remove(landcruiserscene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Hilux/scene.gltf', function(gltf){
+						hilux = gltf.scene.children[0]
+						hilux.scale.set(9, 9, 9)
+						hilux.position.y = 1
+						hilux.rotateZ(Math.PI)
+						hiluxscene = gltf.scene
+						scene.add(hiluxscene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 4){
+					scene.remove(hiluxscene)
+					scene.remove(yarisscene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/LandCruiser/scene.gltf', function(gltf){
+						landcruiser = gltf.scene.children[0]
+						landcruiser.scale.set(9, 9, 9)
+						landcruiser.position.y = 1
+						landcruiserscene = gltf.scene
+						scene.add(landcruiserscene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 5){
+					scene.remove(landcruiserscene)
+					scene.remove(corollascene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Yaris/scene.gltf', function(gltf){
+						yaris = gltf.scene.children[0]
+						yaris.scale.set(9, 9, 9)
+						yaris.position.y = 6
+						yaris.rotateZ(Math.PI)
+						yarisscene = gltf.scene
+						scene.add(yarisscene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 6){
+					scene.remove(yarisscene)
+					scene.remove(vellfirescene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Corolla/scene.gltf', function(gltf){
+						corolla = gltf.scene.children[0]
+						corolla.scale.set(9, 9, 9)
+						corolla.position.y = 1
+						corollascene = gltf.scene
+						scene.add(corollascene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 7){
+					scene.remove(corollascene)
+					scene.remove(suprascene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Vellfire/scene.gltf', function(gltf){
+						vellfire = gltf.scene.children[0]
+						vellfire.scale.set(9, 9, 9)
+						vellfire.position.y = 1
+						vellfire.rotateZ(Math.PI)
+						vellfirescene = gltf.scene
+						scene.add(vellfirescene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 8){
+					scene.remove(vellfirescene)
+					scene.remove(rav4scene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Supra/scene.gltf', function(gltf){
+						supra = gltf.scene.children[0]
+						supra.scale.set(9, 9, 9)
+						supra.position.y = 1
+						suprascene = gltf.scene
+						scene.add(suprascene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+				if(tes.classList.value == 9){
+					tes.style.display = "block"
+					scene.remove(gt86scene)
+					loader.load('https://raw.githubusercontent.com/lordkiki/threejs/main/Rav4/scene.gltf', function(gltf){
+						rav4 = gltf.scene.children[0]
+						rav4.scale.set(240, 240, 240)
+						rav4.position.y = 1
+						rav4.position.z = 23
+						rav4.position.x = -12
+						rav4scene = gltf.scene
+						scene.add(rav4scene)
+						title = gltf.asset.extras.title
+						nama.value = title
+						author = gltf.asset.extras.author
+						pembuat.value = author
+						source = gltf.asset.extras.source
+						sumber.setAttribute('href', source)
+					})
+				}
+			})
+
+
+			// const loader = new GLTFLoader();
+			// loader.load('http://localhost/Innova/scene.gltf', function(gltf){
+			// 	innova = gltf.scene.children[0]
+			// 	innova.scale.set(10, 10, 10) 
+			// 	innova.position.y = 1
+			// 	scene.add(gltf.scene)
+			// 	const tes = document.getElementById("tes")
+			// 	tes.addEventListener('click', function(){
+			// 		if(tes.classList.value === '1'){
+			// 			tes.classList.remove('1')
+			// 			tes.classList.add('2')
+			// 			scene.remove(gltf.scene)
+			// 		}
+			// 		if(tes.classList.value === '2'){
+			// 			loader.load('http://localhost/Fortuner/scene.gltf', function(gltf){
+			// 			fortuner = gltf.scene.children[0]
+			// 			fortuner.scale.set(1000, 1000, 1000) 
+			// 			fortuner.position.y = 1
+			// 			scene.add(gltf.scene)
+			// 			console.log(gltf.scene)
+			// 			})
+			// 		}
+			// 	})
+			// })
+
+			camera.position.z = 40;
+			camera.rotation.y = 45/180*Math.PI
+			camera.position.y = 25;
+			camera.position.x = 40
+
+			
+
+			function animate() {
+				controls.autoRotate = true
+				controls.update()
+				// if(innova){
+				// 	innova.rotation.z += 0.01
+				// 	cylinder.rotation.y += 0.01;
+				// }
+				renderer.render( scene, camera );
+
+				
+			}
+			renderer.setAnimationLoop( animate );
+		</script>
+	</body>
+</html>
